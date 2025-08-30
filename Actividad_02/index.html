@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prisma Profesional - Ingesta Batch</title>
+
+  <!-- Librerías externas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- Encabezado -->
+    <header class="header">
+      <h1>📊 Sistema de Ingesta</h1>
+      <p>Data Warehouse - Tienda de Trajes de Alpaca Perú</p>
+    </header>
+
+    <!-- Layout principal -->
+    <div class="main-grid">
+
+      <!-- Columna izquierda -->
+      <section class="left-panel">
+        <div class="upload-section">
+          <h2>📂 Subir Datos</h2>
+          <div class="upload-area" id="uploadArea">
+            <div class="upload-icon">📁</div>
+            <p>Arrastra tu archivo CSV o Excel aquí</p>
+            <input type="file" id="fileInput" class="file-input" accept=".csv,.xlsx,.xls" />
+            <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+              Seleccionar Archivo
+            </button>
+          </div>
+        </div>
+
+        <div class="table-selector">
+          <h3>Destino en el DW</h3>
+          <select id="tableSelect">
+            <option value="">-- Selecciona una tabla --</option>
+            <option value="dim_clientes">Dimensión Clientes</option>
+            <option value="dim_productos">Dimensión Productos</option>
+            <option value="dim_empleados">Dimensión Empleados</option>
+            <option value="fact_ventas">Hechos - Ventas</option>
+          </select>
+        </div>
+
+        <div class="action-buttons">
+          <button class="process-btn" id="processBtn" onclick="processFile()" disabled>
+            🚀 Procesar
+          </button>
+          <button class="process-btn danger" onclick="clearData()">
+            🗑️ Limpiar
+          </button>
+        </div>
+
+        <div class="progress-bar" id="progressContainer" style="display: none;">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div id="statusMessages"></div>
+      </section>
+
+      <!-- Columna derecha -->
+      <section class="right-panel">
+        <div class="stats-grid" id="statsGrid" style="display: none;">
+          <div class="stat-card">
+            <div class="stat-value" id="totalRows">0</div>
+            <div class="stat-label">Filas Procesadas</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="validRows">0</div>
+            <div class="stat-label">Registros Válidos</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="errorRows">0</div>
+            <div class="stat-label">Errores</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="processingTime">0s</div>
+            <div class="stat-label">Tiempo de Proceso</div>
+          </div>
+        </div>
+
+        <div class="preview-section" id="previewSection" style="display: none;">
+          <h2>👀 Vista Previa</h2>
+          <div id="previewContent"></div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Script externo -->
+  <script src="script.js"></script>
+</body>
+</html>
